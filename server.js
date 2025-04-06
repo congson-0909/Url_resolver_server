@@ -1,5 +1,6 @@
 const puppeteer = require("puppeteer-core");
 const express = require("express");
+const path = require("path");
 
 const app = express();
 app.use(express.json());
@@ -10,9 +11,13 @@ app.post("/resolve", async (req, res) => {
 
   try {
     console.log("Launching browser...");
+
+    const chromiumPath = process.env.CHROME_BIN || '/usr/bin/chromium-browser';
+    console.log("Chromium path: ", chromiumPath);
+
     const browser = await puppeteer.launch({
       headless: 'new',
-      executablePath: '/usr/bin/google-chrome-stable', 
+      executablePath: chromiumPath,  
       args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu']
     });
 
