@@ -1,6 +1,5 @@
-const puppeteer = require("puppeteer-core");
 const express = require("express");
-const path = require("path");
+const puppeteer = require("puppeteer");
 
 const app = express();
 app.use(express.json());
@@ -10,25 +9,17 @@ app.post("/resolve", async (req, res) => {
   if (!url) return res.status(400).json({ error: "No URL provided" });
 
   try {
-    console.log("Launching browser...");
-
-    const chromiumPath = process.env.CHROME_BIN || '/usr/bin/chromium-browser';
-    console.log("Chromium path: ", chromiumPath);
-
     const browser = await puppeteer.launch({
-      headless: 'new',
-      executablePath: chromiumPath,  
-      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu']
+      headless: "new",
+      args: ["--no-sandbox", "--disable-setuid-sandbox"]
     });
 
-    console.log("Browser launched. Opening page...");
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: "networkidle2", timeout: 15000 });
 
     const finalUrl = page.url();
 
     await browser.close();
-    console.log(`Resolved URL: ${finalUrl}`);
     res.json({ original: url, resolved: finalUrl });
   } catch (error) {
     console.error("Error resolving URL:", error);
