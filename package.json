@@ -1,0 +1,16 @@
+{
+  "name": "url_resolver_server",
+  "version": "1.0.0",
+  "description": "Resolve shortened URLs to their final destination",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "puppeteer": "^24.6.0"
+  }
+}
