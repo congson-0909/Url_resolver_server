@@ -1,5 +1,5 @@
-const express = require("express");
 const puppeteer = require("puppeteer-core");
+const express = require("express");
 
 const app = express();
 app.use(express.json());
@@ -12,6 +12,7 @@ app.post("/resolve", async (req, res) => {
     console.log("Launching browser...");
     const browser = await puppeteer.launch({
       headless: 'new',
+      executablePath: '/usr/bin/google-chrome-stable', 
       args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu']
     });
 
