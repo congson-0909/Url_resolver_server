@@ -30,7 +30,7 @@ app.post("/resolve", async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
   console.log(`URL Resolver running on port ${PORT}`);
 });
