@@ -4,7 +4,8 @@
   "description": "Resolve shortened URLs to their final destination",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "postinstall": "npx puppeteer install"
   },
   "keywords": [],
   "author": "",
