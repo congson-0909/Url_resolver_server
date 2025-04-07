@@ -4,6 +4,10 @@ const puppeteer = require("puppeteer");
 const app = express();
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("✅ URL Resolver server is running!");
+});
+
 app.post("/resolve", async (req, res) => {
   const { url } = req.body;
   if (!url) return res.status(400).json({ error: "No URL provided" });
@@ -22,12 +26,12 @@ app.post("/resolve", async (req, res) => {
     await browser.close();
     res.json({ original: url, resolved: finalUrl });
   } catch (error) {
-    console.error("Error resolving URL:", error);
+    console.error("❌ Error resolving URL:", error);
     res.status(500).json({ error: "Could not resolve URL" });
   }
 });
 
-const PORT = process.env.PORT || 10000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`URL Resolver running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
