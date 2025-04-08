@@ -25,7 +25,7 @@ app.post("/resolve", async (req, res) => {
   if (!url) return res.status(400).json({ error: "No URL provided" });
   try {
     const page = await browser.newPage();
-    await page.goto(url, { waitUntil: "networkidle2", timeout: 15000 });
+    await page.goto("https://developer.chrome.com/");
 
     const finalUrl = page.url();
 
