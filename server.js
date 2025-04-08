@@ -1,6 +1,6 @@
 const express = require("express");
 const puppeteer = require("puppeteer");
-
+require("dotenv").config();
 const app = express();
 app.use(express.json());
 
@@ -10,14 +10,20 @@ app.get("/", (req, res) => {
 
 app.post("/resolve", async (req, res) => {
   const { url } = req.body;
+  const browser = await puppeteer.launch({
+    args: [
+      "--disable-setuid-sandbox",
+      "--no-sandbox",
+      "--single-process",
+      "--no-zygote",
+    ],
+    executablePath:
+      process.env.NODE_ENV === "production"
+        ? process.env.PUPPETEER_EXECUTABLE_PATH
+        : puppeteer.executablePath(),
+  });
   if (!url) return res.status(400).json({ error: "No URL provided" });
-
   try {
-    const browser = await puppeteer.launch({
-      headless: "new",
-      args: ["--no-sandbox", "--disable-setuid-sandbox"]
-    });
-
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: "networkidle2", timeout: 15000 });
 
